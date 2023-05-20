@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ExcelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Single_Master" Type="varchar" MaxLength="20" />
+          <Property Name="Joint_Venture" Type="varchar" MaxLength="20" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="ShortName" Type="varchar" MaxLength="25" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="10" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="ContractManager" Type="varchar" MaxLength="225" />
+          <Property Name="TimesheetVeriosnType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LabourCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contract_ID" Type="int" />
+          <Property Name="ContractName" Type="varchar" MaxLength="100" />
+          <Property Name="CommonLabourCategory" Type="varchar" MaxLength="100" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="50" />
+          <Property Name="ShortName" Type="varchar" MaxLength="10" />
+          <Property Name="EEO" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_ContractLabour">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="0..1" />
+          <End Role="LabourCategory" Type="Self.LabourCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabourCategory">
+              <PropertyRef Name="Contract_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExcelModelStoreContainer">
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabourCategory" EntityType="Self.LabourCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ContractLabour" Association="Self.FK_ContractLabour">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="LabourCategory" EntitySet="LabourCategory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExcelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Single_Master" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Joint_Venture" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ShortName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="ContractManager" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="TimesheetVeriosnType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LabourCategories" Relationship="Self.FK_ContractLabour" FromRole="Contract" ToRole="LabourCategory" />
+        </EntityType>
+        <EntityType Name="LabourCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contract_ID" Type="Int32" />
+          <Property Name="ContractName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CommonLabourCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EEO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_ContractLabour" FromRole="LabourCategory" ToRole="Contract" />
+        </EntityType>
+        <Association Name="FK_ContractLabour">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="0..1" />
+          <End Role="LabourCategory" Type="Self.LabourCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabourCategory">
+              <PropertyRef Name="Contract_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExcelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contracts" EntityType="Self.Contract" />
+          <EntitySet Name="LabourCategories" EntityType="Self.LabourCategory" />
+          <AssociationSet Name="FK_ContractLabour" Association="Self.FK_ContractLabour">
+            <End Role="Contract" EntitySet="Contracts" />
+            <End Role="LabourCategory" EntitySet="LabourCategories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExcelModelStoreContainer" CdmEntityContainer="ExcelEntities">
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="ExcelModel.Contract">
+              <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="Single_Master" ColumnName="Single_Master" />
+                <ScalarProperty Name="Joint_Venture" ColumnName="Joint_Venture" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ContractManager" ColumnName="ContractManager" />
+                <ScalarProperty Name="TimesheetVeriosnType" ColumnName="TimesheetVeriosnType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabourCategories">
+            <EntityTypeMapping TypeName="ExcelModel.LabourCategory">
+              <MappingFragment StoreEntitySet="LabourCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
+                <ScalarProperty Name="ContractName" ColumnName="ContractName" />
+                <ScalarProperty Name="CommonLabourCategory" ColumnName="CommonLabourCategory" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="EEO" ColumnName="EEO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

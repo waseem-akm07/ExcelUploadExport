@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ExcelModelStoreContainer" CdmEntityContainer="ExcelEntities">
+    <EntitySetMapping Name="Contracts">
+      <EntityTypeMapping TypeName="ExcelModel.Contract">
+        <MappingFragment StoreEntitySet="Contract">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Single_Master" ColumnName="Single_Master" />
+          <ScalarProperty Name="Joint_Venture" ColumnName="Joint_Venture" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="ContractManager" ColumnName="ContractManager" />
+          <ScalarProperty Name="TimesheetVeriosnType" ColumnName="TimesheetVeriosnType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabourCategories">
+      <EntityTypeMapping TypeName="ExcelModel.LabourCategory">
+        <MappingFragment StoreEntitySet="LabourCategory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
+          <ScalarProperty Name="ContractName" ColumnName="ContractName" />
+          <ScalarProperty Name="CommonLabourCategory" ColumnName="CommonLabourCategory" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="EEO" ColumnName="EEO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

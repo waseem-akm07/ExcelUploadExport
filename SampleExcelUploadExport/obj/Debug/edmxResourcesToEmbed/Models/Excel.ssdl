@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ExcelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Contract">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Client" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Single_Master" Type="varchar" MaxLength="20" />
+    <Property Name="Joint_Venture" Type="varchar" MaxLength="20" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="ShortName" Type="varchar" MaxLength="25" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="10" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="ContractManager" Type="varchar" MaxLength="225" />
+    <Property Name="TimesheetVeriosnType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LabourCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Contract_ID" Type="int" />
+    <Property Name="ContractName" Type="varchar" MaxLength="100" />
+    <Property Name="CommonLabourCategory" Type="varchar" MaxLength="100" />
+    <Property Name="DisplayName" Type="varchar" MaxLength="50" />
+    <Property Name="ShortName" Type="varchar" MaxLength="10" />
+    <Property Name="EEO" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_ContractLabour">
+    <End Role="Contract" Type="Self.Contract" Multiplicity="0..1" />
+    <End Role="LabourCategory" Type="Self.LabourCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contract">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LabourCategory">
+        <PropertyRef Name="Contract_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ExcelModelStoreContainer">
+    <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LabourCategory" EntityType="Self.LabourCategory" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ContractLabour" Association="Self.FK_ContractLabour">
+      <End Role="Contract" EntitySet="Contract" />
+      <End Role="LabourCategory" EntitySet="LabourCategory" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
